@@ -268,6 +268,7 @@ export async function loadCliConfig(
   extensions: Extension[],
   sessionId: string,
   argv: CliArgs,
+  version?: string,
 ): Promise<Config> {
   const debugMode =
     argv.debug ||
@@ -445,6 +446,7 @@ export async function loadCliConfig(
     ideMode,
     ideModeFeature,
     ideClient,
+    version: version || (await getCliVersion()),
   });
 }
 
