@@ -157,6 +157,7 @@ export interface ConfigParameters {
   proxy?: string;
   cwd: string;
   fileDiscoveryService?: FileDiscoveryService;
+  version: string;
   bugCommand?: BugCommandSettings;
   model: string;
   extensionContextFilePaths?: string[];
@@ -223,9 +224,11 @@ export class Config {
     | Record<string, SummarizeToolOutputSettings>
     | undefined;
   private readonly experimentalAcp: boolean = false;
+  private readonly version: string;
 
   constructor(params: ConfigParameters) {
     this.sessionId = params.sessionId;
+    this.version = params.version;
     this.embeddingModel =
       params.embeddingModel ?? DEFAULT_GEMINI_EMBEDDING_MODEL;
     this.sandbox = params.sandbox;
@@ -412,6 +415,9 @@ export class Config {
 
   getMcpServers(): Record<string, MCPServerConfig> | undefined {
     return this.mcpServers;
+  }
+  getVersion(): string {
+    return this.version;
   }
 
   getUserMemory(): string {
