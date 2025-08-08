@@ -7,7 +7,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Config } from './config.js';
 import { DEFAULT_GEMINI_MODEL, DEFAULT_GEMINI_FLASH_MODEL } from './models.js';
-import { IdeClient } from '../ide/ide-client.js';
+
 import fs from 'node:fs';
 
 vi.mock('node:fs');
@@ -26,7 +26,6 @@ describe('Flash Model Fallback Configuration', () => {
       debugMode: false,
       cwd: '/test',
       model: DEFAULT_GEMINI_MODEL,
-      ideClient: IdeClient.getInstance(false),
       version: '0.1.0-test',
     });
 
@@ -52,7 +51,6 @@ describe('Flash Model Fallback Configuration', () => {
         debugMode: false,
         cwd: '/test',
         model: DEFAULT_GEMINI_MODEL,
-        ideClient: IdeClient.getInstance(false),
         version: '0.1.0-test',
       });
 
@@ -77,7 +75,6 @@ describe('Flash Model Fallback Configuration', () => {
         debugMode: false,
         cwd: '/test',
         model: 'custom-model',
-        ideClient: IdeClient.getInstance(false),
         version: '0.1.0-test',
       });
 

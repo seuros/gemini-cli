@@ -18,7 +18,6 @@ import {
 } from '../core/contentGenerator.js';
 import { GeminiClient } from '../core/client.js';
 import { GitService } from '../services/gitService.js';
-import { IdeClient } from '../ide/ide-client.js';
 
 vi.mock('fs', async (importOriginal) => {
   const actual = await importOriginal<typeof import('fs')>();
@@ -121,7 +120,6 @@ describe('Server Config (config.ts)', () => {
     sessionId: SESSION_ID,
     version: '0.1.0-test',
     model: MODEL,
-    ideClient: IdeClient.getInstance(false),
   };
 
   beforeEach(() => {
@@ -152,6 +150,18 @@ describe('Server Config (config.ts)', () => {
       });
 
       await expect(config.initialize()).resolves.toBeUndefined();
+    });
+
+    it('should throw an error if initialized more than once', async () => {
+      const config = new Config({
+        ...baseParams,
+        checkpointing: false,
+      });
+
+      await expect(config.initialize()).resolves.toBeUndefined();
+      await expect(config.initialize()).rejects.toThrow(
+        'Config was already initialized',
+      );
     });
   });
 
